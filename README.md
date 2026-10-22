@@ -261,4 +261,4 @@ This project is distributed under the MIT License. See the [LICENSE](LICENSE) fi
 
 ---
 
-**Developed by Malini S **
+**Developed by Malini S**

@@ -4,8 +4,7 @@
 
 **Developer:** Malini S  
 **Project:** AutoRecon Lite  
-**Repository:** [IqraSec-Phase-2-Scripting-Automation](https://github.com/malu-2707/IqraSec-Phase-2-Scripting-Automation)  
-**Submission Deadline:** 25 October 2026
+**Repository:** [IqraSec-Phase-2-Scripting-Automation](https://github.com/malu-2707/IqraSec-Phase-2-Scripting-Automation)
 
 ---
 
@@ -13,51 +12,46 @@
 
 Scripting and automation are essential in cybersecurity because repetitive manual tasks can consume time and introduce errors.
 
-**AutoRecon Lite** is a lightweight command-line reconnaissance automation tool designed to simplify basic network discovery, service enumeration, scan result collection, and report generation in authorized cybersecurity labs.
+**AutoRecon Lite** is a lightweight Python command-line tool designed to automate basic network reconnaissance in authorized cybersecurity labs. It validates target input, checks for the Nmap dependency, performs port scanning and service/version detection, saves scan results, and generates a Markdown report.
 
-Developed using Python and integrated with Nmap, the project aims to provide a simple, organized, and efficient workflow for security learners and penetration-testing practitioners.
-
-The tool emphasizes usability, input validation, error handling, maintainable code, and clear reporting.
+The project aims to provide cybersecurity learners with a simple and organized workflow for collecting reconnaissance information while emphasizing input validation, error handling, testing, and responsible use.
 
 ## 2. Project Objectives
 
-- Automate repetitive reconnaissance tasks.
+- Automate repetitive network reconnaissance tasks.
 - Reduce manual effort during authorized security assessments.
-- Validate target input before scanning.
-- Check required dependencies and handle missing tools.
-- Automate port and service enumeration using Nmap.
-- Save scan results for future analysis.
-- Generate readable Markdown reports from actual scan results.
-- Implement appropriate error handling and automated tests.
-- Maintain clean, modular, and understandable source code.
-- Publish an open-source project suitable for a cybersecurity portfolio.
+- Validate IP addresses and supported hostnames.
+- Check for required dependencies.
+- Automate port scanning and service enumeration using Nmap.
+- Save scan output in text and XML formats.
+- Generate readable Markdown reports from scan results.
+- Implement error handling and automated tests.
+- Maintain understandable and maintainable source code.
+- Publish an open-source cybersecurity project on GitHub.
 
 ## 3. Features
 
-The following features define the intended functionality of AutoRecon Lite. Each feature should be marked as complete only after implementation and testing.
-
-- **Target validation:** Validate target IP addresses or supported hostnames.
-- **Dependency checking:** Check whether Python and Nmap are available.
-- **Reachability checks:** Check whether a target appears reachable where supported.
-- **Automated scanning:** Execute configured Nmap port and service enumeration.
-- **Result collection:** Store scan output in an organized directory.
-- **Report generation:** Create Markdown reports from collected scan results.
-- **Error handling:** Handle invalid input, missing dependencies, and failed commands.
-- **Command-line interface:** Provide usage instructions and clear error messages.
-- **Testing:** Verify input validation and other supported functionality.
+- **Target validation:** Validates supported IPv4, IPv6, and hostname inputs.
+- **Dependency checking:** Checks whether Nmap is installed and available on the system PATH.
+- **Automated scanning:** Uses Nmap to scan the top 1,000 TCP ports and detect service versions.
+- **Result collection:** Saves scan output in text and XML formats.
+- **Report generation:** Produces a Markdown report containing scan information and results.
+- **Error handling:** Handles invalid targets, missing Nmap, scan timeouts, and execution errors.
+- **Command-line interface:** Supports target and output-directory arguments.
+- **Automated testing:** Includes unit tests for target validation.
 
 ## 4. Technologies Used
 
 | Technology | Purpose |
 |---|---|
 | Python 3 | Main application and automation logic |
-| Bash | Optional command-line automation |
-| Nmap | Port scanning and service enumeration |
-| Kali Linux | Security testing environment |
+| Nmap | Port scanning and service/version detection |
+| Kali Linux | Development and security testing environment |
 | Git | Version control |
-| GitHub | Repository hosting and collaboration |
+| GitHub | Repository hosting |
 | Markdown | Documentation and report generation |
-| Python unittest | Automated testing |
+| Python `unittest` | Automated testing |
+| Bash | Optional terminal automation |
 
 ## 5. Project Structure
 
@@ -68,28 +62,24 @@ IqraSec-Phase-2-Scripting-Automation/
 ├── .gitignore
 ├── requirements.txt
 ├── autorecon.py
-├── modules/
-│   ├── __init__.py
-│   ├── validator.py
-│   ├── scanner.py
-│   └── reporter.py
-├── tests/
-│   ├── __init__.py
-│   └── test_validator.py
 ├── reports/
 │   └── .gitkeep
-└── examples/
-    └── sample-report.md
+├── screenshots/
+├── tests/
+│   └── test_autorecon.py
+└── __pycache__/
 ```
 
-This is the recommended structure. The repository should contain only files that actually exist and correspond to the implemented project.
+The `screenshots/` directory can contain project demonstration images. The `__pycache__/` directory is generated by Python and should not be committed to GitHub.
+
+The `reports/` directory is used to store generated scan results locally. Generated reports are excluded from version control by default to help prevent accidental publication of sensitive information.
 
 ## 6. System Requirements
 
 - Kali Linux or a compatible Linux distribution.
 - Python 3.10 or later.
-- Nmap installed and available in the system PATH.
-- Git, for repository management.
+- Nmap installed and available on the system PATH.
+- Git for repository management.
 - An authorized target or isolated cybersecurity lab.
 
 Check the installed tools:
@@ -121,107 +111,128 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-### Step 4: Install dependencies
+### Step 4: Install Nmap
 
-If the project uses external Python packages, install them with:
+On Kali Linux:
+
+```bash
+sudo apt update
+sudo apt install nmap
+```
+
+### Step 5: Check Python dependencies
+
+The current implementation uses Python's standard library and does not require third-party Python packages.
 
 ```bash
 python3 -m pip install -r requirements.txt
 ```
 
-If the project uses only the Python standard library, `requirements.txt` can remain empty. Nmap must still be installed separately for scanning functionality.
-
 ## 8. Usage
 
-The following commands describe the intended interface and should be used after the corresponding options have been implemented.
-
-### Display help
+### Display the help menu
 
 ```bash
 python3 autorecon.py --help
 ```
 
-### Run reconnaissance against an authorized lab target
+### Scan an authorized lab target
 
 ```bash
 python3 autorecon.py --target 192.168.56.101
 ```
 
-### Save results to an output directory
+### Specify an output directory
 
 ```bash
 python3 autorecon.py --target 192.168.56.101 --output reports/
 ```
 
-**Note:** `192.168.56.101` is an example private-network address, not a verified target address. Replace it with the actual address of your authorized lab machine. The available command-line options must match the implemented script.
+Replace `192.168.56.101` with the IP address or hostname of a system you own or are explicitly authorized to assess.
 
-## 9. Testing and Quality Assurance
+The default output directory is `reports/`.
 
-Testing helps ensure that the tool behaves correctly and handles unexpected situations.
+### Scan configuration
 
-The following test cases should be considered:
+The current scan uses Nmap with service/version detection and the top 1,000 TCP ports. The scan may take time depending on network conditions, target availability, and filtering rules.
 
-| Test case | Expected behavior |
+## 9. Output and Report Generation
+
+AutoRecon Lite saves the following output files for each scan:
+
+| File type | Description |
 |---|---|
-| Valid target input | Accept supported target formats |
-| Invalid target input | Display an error and reject invalid input |
-| Missing Nmap | Explain that the required dependency is unavailable |
-| Unreachable target | Report the result without crashing |
-| Scan execution failure | Handle the error and return a meaningful status |
-| Report generation | Generate a report from actual collected results |
-| Invalid command-line arguments | Display usage instructions |
+| `.txt` | Human-readable Nmap scan output |
+| `.xml` | Structured Nmap scan results |
+| `_report.md` | Markdown summary report |
 
-Run the automated test suite:
+The generated report incorporates information from the actual scan, making the results easier to review and document.
+
+Report findings should be interpreted carefully. Detected services and open ports do not automatically prove that vulnerabilities exist.
+
+## 10. Testing and Quality Assurance
+
+Automated testing helps ensure that target validation behaves as expected.
+
+### Run the test suite
 
 ```bash
 python3 -m unittest discover -s tests -v
 ```
 
-Document the actual test results and fix any failures before submitting the project.
+### Check Python syntax
 
-## 10. Example Report Contents
+```bash
+python3 -m py_compile autorecon.py
+```
 
-Reports generated by the tool should include relevant information such as:
+### Test the command-line interface
 
-- Assessment date and time.
-- Target supplied by the user.
-- Scan configuration.
-- Discovered open ports.
-- Detected services and versions, when available.
-- Scan completion status.
-- Output file locations.
-- Limitations and observations.
+```bash
+python3 autorecon.py --help
+```
 
-The report must distinguish observed scan results from assumptions. Service detection alone does not prove that a vulnerability exists.
+The tests should cover valid IP addresses, supported hostnames, malformed targets, empty input, and invalid hostname formats.
+
+Before submission, verify that all tests pass and that error handling works for missing dependencies and scan failures.
 
 ## 11. Ethical Use and Safety
 
-AutoRecon Lite is intended for educational use and authorized cybersecurity assessments.
+AutoRecon Lite is intended for educational purposes and authorized cybersecurity assessments.
 
 - Scan only systems you own or have explicit permission to assess.
 - Prefer isolated virtual machines for vulnerable-target exercises.
-- Do not expose vulnerable machines to public networks.
 - Review scan parameters before execution.
-- Do not use the tool to access systems without authorization.
+- Do not use the tool to access or scan systems without authorization.
 - Avoid publishing credentials, sensitive logs, or private information.
-- Ensure that reports accurately reflect the tests performed.
+- Keep reports accurate and distinguish observed results from assumptions.
 
 The developer is not responsible for unauthorized use of this software.
 
-## 12. Future Improvements
+## 12. Limitations
+
+- Scanning is limited to the top 1,000 TCP ports by default.
+- Service/version detection may be incomplete or inaccurate.
+- Firewalls, filtering, and network reachability can affect scan results.
+- The tool does not exploit vulnerabilities.
+- The tool does not guarantee vulnerability detection.
+- Results require human review and interpretation.
+
+## 13. Future Improvements
 
 Potential enhancements include:
 
+- Configurable port ranges and scan profiles.
 - JSON and CSV report exports.
-- Configurable scan profiles.
-- Improved logging and debugging.
+- Improved progress reporting and logging.
 - More comprehensive unit and integration tests.
-- Report summaries and evidence-based severity classification.
-- Configuration files for reusable settings.
-- Additional checks for authorized lab environments.
+- Optional HTML report generation.
 - Continuous integration for automated testing.
+- Evidence-based report summaries.
 
-## 13. References
+These enhancements should be described as completed features only after they have been implemented and tested.
+
+## 14. References
 
 - [Kali Linux](https://www.kali.org/)
 - [Nmap Official Documentation](https://nmap.org/book/man.html)
@@ -230,7 +241,7 @@ Potential enhancements include:
 - [Git Documentation](https://git-scm.com/doc)
 - [GitHub Documentation](https://docs.github.com/)
 
-## 14. Project Information
+## 15. Project Information
 
 | Field | Details |
 |---|---|
@@ -239,17 +250,15 @@ Potential enhancements include:
 | Project Name | AutoRecon Lite |
 | Developer | Malini S |
 | Primary Language | Python |
-| Supporting Language | Bash, where implemented |
+| Supporting Language | Bash, where applicable |
 | Platform | Kali Linux |
 | Repository | [GitHub Repository](https://github.com/malu-2707/IqraSec-Phase-2-Scripting-Automation) |
+| License | MIT License |
 
+## 16. License
 
-## 15. License
-
-This project is intended to be distributed under the MIT License. The repository must include a valid `LICENSE` file containing the complete license text.
+This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for the complete license text.
 
 ---
 
-**Developed by Malini S as part of the IqraSec Academy internship.**
-
-*Learn. Practice. Secure.*
+**Developed by Malini S **

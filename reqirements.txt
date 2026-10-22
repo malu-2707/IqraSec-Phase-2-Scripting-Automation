@@ -1,0 +1,2 @@
+# No third-party Python packages required.
+# Install Nmap separately using your operating system's package manager.
